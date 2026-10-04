@@ -1,0 +1,16 @@
+window.onload = function() {
+    // 1. Catch the token from Deriv's OAuth redirect immediately
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token1') || urlParams.get('token');
+    
+    if (token) {
+        // Save it so the app remembers you are logged in
+        localStorage.setItem('deriv_token', token);
+        // Clean the token out of the URL bar so it looks clean
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    // Initialize invisible commission tracking feed on load
+    initCommissionTracker();
+    setInterval(updateRiseFallSignals, 4000);
+};
